@@ -1,18 +1,9 @@
-class Costumer:
-	def __init__(self, name, surname, mail, phone):
-		self.__name = name
-		self.__surname = surname
-		self.__mail = mail
-		self.__phone = phone
-		self.reservation = []
+from includes.Humans import Humans
 
-	def getPersonalDetails(self):
-		return {
-			"name": self.__name, 
-			"surname": self.__surname,
-			"mail": self.__mail,
-			"phone": self.__phone
-			}
+class Costumer(Humans):
+	def __init__(self, name, surname, mail, phone):
+		super().__init__(name, surname, mail, phone)
+		self.reservation = []
 
 	def setReservation(self, day, hour, service):
 		self.reservation.append({
