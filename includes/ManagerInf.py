@@ -16,3 +16,10 @@ class Manager(Humans):
 		details.update({
 			"offDay": self.__offDay
 		})
+		return (details)
+
+	def viewAllArtists(self, artistList):
+		return [artist.getDetails() for artist in artistList]
+
+	def viewAllCustomers(self, customerList):
+		return [customer.getDetails() for customer in customerList]
