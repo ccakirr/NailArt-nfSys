@@ -23,22 +23,28 @@ def load_reservations():
 
 
 def save_reservations(res_list):
-    """Tüm rezervasyon listesini veritabanına yaz (mevcut tüm rezervasyonları siler ve yeniden ekler)."""
+    """Tüm rezervasyon listesini veritabanına yaz."""
     conn = get_connection()
     cursor = conn.cursor()
     
-    # Tüm rezervasyonları sil
-    cursor.execute("DELETE FROM reservations")
-    
-    # Yeni rezervasyonları ekle
-    for res in res_list:
-        cursor.execute("""
-            INSERT INTO reservations (customer_mail, day, hour, service, artist)
-            VALUES (?, ?, ?, ?, ?)
-        """, (res['customer_mail'], res['day'], res['hour'], res['service'], res.get('artist', None)))
-    
-    conn.commit()
-    conn.close()
+    try:
+        # Tüm rezervasyonları sil
+        cursor.execute("DELETE FROM reservations")
+        
+        # Yeni rezervasyonları ekle
+        for res in res_list:
+            cursor.execute("""
+                INSERT INTO reservations (customer_mail, day, hour, service, artist)
+                VALUES (?, ?, ?, ?, ?)
+            """, (res['customer_mail'], res['day'], res['hour'], res['service'], res.get('artist', None)))
+        
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Rezervasyonlar kaydedilemedi: {e}")
+        return False
+    finally:
+        conn.close()
 
 
 def add_reservation(data):
@@ -46,13 +52,19 @@ def add_reservation(data):
     conn = get_connection()
     cursor = conn.cursor()
     
-    cursor.execute("""
-        INSERT INTO reservations (customer_mail, day, hour, service, artist)
-        VALUES (?, ?, ?, ?, ?)
-    """, (data['customer_mail'], data['day'], data['hour'], data['service'], data.get('artist', None)))
-    
-    conn.commit()
-    conn.close()
+    try:
+        cursor.execute("""
+            INSERT INTO reservations (customer_mail, day, hour, service, artist)
+            VALUES (?, ?, ?, ?, ?)
+        """, (data['customer_mail'], data['day'], data['hour'], data['service'], data.get('artist', None)))
+        
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Rezervasyon eklenemedi: {e}")
+        return False
+    finally:
+        conn.close()
 
 
 def delete_reservation(customer_mail, day, hour):
@@ -60,10 +72,16 @@ def delete_reservation(customer_mail, day, hour):
     conn = get_connection()
     cursor = conn.cursor()
     
-    cursor.execute("""
-        DELETE FROM reservations
-        WHERE customer_mail = ? AND day = ? AND hour = ?
-    """, (customer_mail, day, hour))
-    
-    conn.commit()
-    conn.close()
+    try:
+        cursor.execute("""
+            DELETE FROM reservations
+            WHERE customer_mail = ? AND day = ? AND hour = ?
+        """, (customer_mail, day, hour))
+        
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Rezervasyon silinemedi: {e}")
+        return False
+    finally:
+        conn.close()

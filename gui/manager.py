@@ -149,21 +149,21 @@ class ManagerPanel:
             else:
                 obj = Costumer(name, surname, mail, phone)
 
-            save_user(utype, username, password, obj)
-            self.users.append({
-                "type": utype,
-                "username": username,
-                "password": password,
-                "object": obj
-            })
-            messagebox.showinfo("Success", f"New {utype} created successfully!")
-            self.view_users()
+            if save_user(utype, username, password, obj):
+                self.users.append({
+                    "type": utype,
+                    "username": username,
+                    "password": password,
+                    "object": obj
+                })
+                messagebox.showinfo("Success", f"New {utype} created successfully!")
+                self.view_users()
+            else:
+                messagebox.showerror("Error", "User could not be saved. Username may already exist.")
 
         tk.Button(self.content, text="Save User", bg="#f8b6c4", fg="white",
                   font=("Arial", 12, "bold"), command=create_user).pack(pady=10)
 
-    # -----------------------------------------
-    # MANAGE SERVICES
     # -----------------------------------------
     def manage_services(self):
         self.clear_content()
@@ -183,9 +183,11 @@ class ManagerPanel:
         def add_new():
             name = entry.get().strip()
             if name:
-                add_service(name)
-                messagebox.showinfo("Added", f"'{name}' added successfully.")
-                self.manage_services()
+                if add_service(name):
+                    messagebox.showinfo("Added", f"'{name}' added successfully.")
+                    self.manage_services()
+                else:
+                    messagebox.showwarning("Warning", f"'{name}' already exists.")
 
         def delete_selected():
             sel = tree.selection()
@@ -193,7 +195,11 @@ class ManagerPanel:
                 messagebox.showwarning("Error", "Select a service to delete.")
                 return
             name = tree.item(sel[0])["values"][0]
-            delete_service(name)
+            if delete_service(name):
+                messagebox.showinfo("Deleted", f"'{name}' removed.")
+                self.manage_services()
+            else:
+                messagebox.showerror("Error", "Service could not be deleted.")
             messagebox.showinfo("Deleted", f"'{name}' removed.")
             self.manage_services()
 

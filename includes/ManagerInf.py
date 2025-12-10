@@ -1,4 +1,4 @@
-from includes.Humans import Humans
+from Humans import Humans
 
 class Manager(Humans):
 	def __init__(self, name, surname, mail, phone, offDay):

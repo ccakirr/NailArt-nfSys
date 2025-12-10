@@ -4,7 +4,6 @@ from includes.Operations import load_users
 from gui.customer import CustomerPanel
 from gui.artist import ArtistPanel
 from gui.manager import ManagerPanel
-from database.db_manager import init_database
 
 def start_gui(user_type, user_obj, all_users):
 	root = tk.Tk()
@@ -17,8 +16,6 @@ def start_gui(user_type, user_obj, all_users):
 	root.mainloop()
 
 def main():
-	init_database()
-	
 	users = load_users()
 	login = tk.Tk()
 	login.title("Nail Art Information System - Login")
@@ -31,6 +28,7 @@ def main():
 	tk.Label(login, text="Password:", bg="white").pack()
 	entry_pass = tk.Entry(login, show="*")
 	entry_pass.pack(pady=5)
+	
 	def login_user():
 		username = entry_user.get().strip()
 		password = entry_pass.get().strip()
@@ -40,6 +38,7 @@ def main():
 				start_gui(u["type"], u["object"], users)
 				return
 		messagebox.showerror("Login Failed", "Invalid username or password")
+	
 	tk.Button(login, text="Login", bg="#f8b6c4", fg="white", font=("Arial", 12, "bold"),
 			width=20, command=login_user).pack(pady=20)
 	tk.Label(login, text="Default Admin: admin / 1234", bg="white", fg="#888").pack(pady=10)

@@ -61,12 +61,12 @@ class CustomerPanel:
 		# --- Services (checkbox list) ---
 		tk.Label(self.content, text="Select Services:", bg="white").pack(pady=5)
 		self.service_vars = []
+		self.services = self.service_ops.load_services()
+		# --- Services (checkbox list) ---
+		tk.Label(self.content, text="Select Services:", bg="white").pack(pady=5)
+		self.service_vars = []
 		self.services = load_services()
-		for s in self.services:
-			var = tk.BooleanVar()
-			cb = tk.Checkbutton(self.content, text=s, variable=var, bg="white")
-			cb.pack(anchor="w", padx=80)
-			self.service_vars.append((s, var))
+		for s in self.services:nd((s, var))
 		tk.Button(self.content, text="Confirm Booking",
 				bg="#f8b6c4", fg="white", font=("Arial", 12, "bold"),
 				command=self.confirm_booking).pack(pady=10)

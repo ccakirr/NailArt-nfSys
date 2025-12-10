@@ -14,19 +14,23 @@ def load_services():
 
 
 def save_services(services):
-    """Tüm servis listesini veritabanına yaz (mevcut tüm servisleri siler ve yeniden ekler)."""
+    """Tüm servis listesini veritabanına yaz."""
     conn = get_connection()
     cursor = conn.cursor()
     
-    # Tüm servisleri sil
-    cursor.execute("DELETE FROM services")
-    
-    # Yeni servisleri ekle
-    for service in services:
-        cursor.execute("INSERT INTO services (name) VALUES (?)", (service,))
-    
-    conn.commit()
-    conn.close()
+    try:
+        cursor.execute("DELETE FROM services")
+        
+        for service in services:
+            cursor.execute("INSERT INTO services (name) VALUES (?)", (service,))
+        
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Servisler kaydedilemedi: {e}")
+        return False
+    finally:
+        conn.close()
 
 
 def add_service(name):
@@ -35,15 +39,30 @@ def add_service(name):
     if name not in services:
         conn = get_connection()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO services (name) VALUES (?)", (name,))
-        conn.commit()
-        conn.close()
+        
+        try:
+            cursor.execute("INSERT INTO services (name) VALUES (?)", (name,))
+            conn.commit()
+            return True
+        except Exception as e:
+            print(f"Servis eklenemedi: {e}")
+            return False
+        finally:
+            conn.close()
+    return False
 
 
 def delete_service(name):
     """Servisi sil."""
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM services WHERE name = ?", (name,))
-    conn.commit()
-    conn.close()
+    
+    try:
+        cursor.execute("DELETE FROM services WHERE name = ?", (name,))
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Servis silinemedi: {e}")
+        return False
+    finally:
+        conn.close()

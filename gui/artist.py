@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from includes.ResOps import load_reservations, save_reservations
+from includes.Operations import update_user_earnings
 from datetime import datetime
 
 
@@ -116,6 +117,8 @@ class ArtistPanel:
 			try:
 				val = float(entry.get())
 				self.artist.setEarning(val)
+				# Veritabanını güncelle
+				update_user_earnings(self.artist.getDetails()["mail"], val)
 				messagebox.showinfo("Updated", f"Earnings updated to {val} ₺")
 				self.update_earnings()
 			except ValueError:
