@@ -1,0 +1,6 @@
+[
+    "Classic Manicure",
+    "Gel Polish",
+    "Nail Art Design",
+    "Pedicure"
+]

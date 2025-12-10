@@ -1,0 +1,11 @@
+[
+    {
+        "customer_name": "customer customer",
+        "customer_mail": "customer",
+        "artist_name": "Caner \u00c7ak\u0131r",
+        "artist_mail": "canercakir@mail.com",
+        "day": "19/11/2025",
+        "hour": "14:30",
+        "service": "Classic Manicure, Gel Polish, Nail Art Design, Pedicure"
+    }
+]

@@ -29,11 +29,12 @@ class Artist(Humans):
 		return (self.__earnings)
 
 	def setReservation(self, costumerDetails, day, hour, service):
+		details = costumerDetails.getDetails()
 		self.reservations.append({
-			"name": costumerDetails.name,
-			"surname": costumerDetails.surname,
-			"mail": costumerDetails.mail,
-			"phone": costumerDetails.phone,
+			"name": details["name"],
+			"surname": details["surname"],
+			"mail": details["mail"],
+			"phone": details["phone"],
 			"day": day,
 			"hour": hour,
 			"service": service
