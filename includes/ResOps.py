@@ -2,7 +2,6 @@ from database.db_manager import get_connection, init_database
 
 
 def load_reservations():
-    """Veritabanından rezervasyonları oku."""
     init_database()
     conn = get_connection()
     cursor = conn.cursor()
@@ -23,15 +22,12 @@ def load_reservations():
 
 
 def save_reservations(res_list):
-    """Tüm rezervasyon listesini veritabanına yaz."""
     conn = get_connection()
     cursor = conn.cursor()
     
     try:
-        # Tüm rezervasyonları sil
         cursor.execute("DELETE FROM reservations")
         
-        # Yeni rezervasyonları ekle
         for res in res_list:
             cursor.execute("""
                 INSERT INTO reservations (customer_mail, day, hour, service, artist)
@@ -48,7 +44,6 @@ def save_reservations(res_list):
 
 
 def add_reservation(data):
-    """Yeni randevu ekle."""
     conn = get_connection()
     cursor = conn.cursor()
     
@@ -68,7 +63,6 @@ def add_reservation(data):
 
 
 def delete_reservation(customer_mail, day, hour):
-    """Belirli bir müşterinin belirli randevusunu sil."""
     conn = get_connection()
     cursor = conn.cursor()
     

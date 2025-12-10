@@ -5,7 +5,6 @@ from database.db_manager import get_connection, init_database
 
 
 def load_users():
-    """Veritabanından kullanıcıları okuyup kullanıcı nesneleri döner."""
     init_database()
     conn = get_connection()
     cursor = conn.cursor()
@@ -44,7 +43,6 @@ def load_users():
 
 
 def save_user(user_type, username, password, obj):
-    """Yeni kullanıcıyı veritabanına yazar."""
     conn = get_connection()
     cursor = conn.cursor()
     
@@ -80,7 +78,6 @@ def save_user(user_type, username, password, obj):
 
 
 def update_user_earnings(email, new_earnings):
-    """Sanatçının kazancını günceller"""
     conn = get_connection()
     cursor = conn.cursor()
     

@@ -2,7 +2,6 @@ from database.db_manager import get_connection, init_database
 
 
 def load_services():
-    """Veritabanından servisleri oku."""
     init_database()
     conn = get_connection()
     cursor = conn.cursor()
@@ -14,7 +13,6 @@ def load_services():
 
 
 def save_services(services):
-    """Tüm servis listesini veritabanına yaz."""
     conn = get_connection()
     cursor = conn.cursor()
     
@@ -34,7 +32,6 @@ def save_services(services):
 
 
 def add_service(name):
-    """Yeni servis ekle."""
     services = load_services()
     if name not in services:
         conn = get_connection()
@@ -53,7 +50,6 @@ def add_service(name):
 
 
 def delete_service(name):
-    """Servisi sil."""
     conn = get_connection()
     cursor = conn.cursor()
     
